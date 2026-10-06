@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prime Video</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0f171e;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #0f171e;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            background: #263746;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+        }
+
+        .nav-right i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .language {
+            position: relative;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .language-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            width: 140px;
+            z-index: 100;
+        }
+
+        .language:hover .language-menu {
+            display: block;
+        }
+
+        .language-menu a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .language-menu a:hover {
+            background: #ddd;
+        }
+
+        .profile {
+            background: #00a8e1;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .join-btn {
+            background: #00a8e1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 13px 20px;
+            font-weight: bold;
+        }
+
+        /* HOME SLIDER */
+
+        .hero {
+            height: 550px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .carousel,
+        .hero .carousel-inner,
+        .hero .carousel-item {
+            height: 100%;
+        }
+
+        .hero .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero .carousel-item::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                #0f171e 0%,
+                rgba(15, 23, 30, 0.9) 30%,
+                transparent 90%
+            );
+        }
+
+        .hero .carousel-item::before {
+            content: "";
+            position: absolute;
+            inset: 60% 0 0;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                #0f171e
+            );
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 7%;
+            transform: translateY(-50%);
+            width: 380px;
+            max-width: 80%;
+            z-index: 5;
+        }
+
+        .mx-logo {
+            color: #00a8e1;
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero-content h1 {
+            font-size: 45px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            margin-bottom: 10px;
+        }
+
+        .watch-btn {
+            background:#00a8e1;
+            color: white;
+            border: 1px solid #71808b;
+            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        .round-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: #263746;
+            color: white;
+            font-size: 25px;
+        }
+
+        .movie-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .free-text {
+            margin-top: 15px;
+        }
+
+        .free-text i {
+            color: #00a8e1;
+        }
+
+        /* RECOMMENDATION SECTIONS */
+
+        .movie-section {
+            padding: 20px 2%;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-heading h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .section-heading a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .section-heading a:hover {
+            color: #00a8e1;
+        }
+
+        .movie-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 5px 0 20px;
+            scrollbar-width: none;
+        }
+
+        .movie-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .movie-card {
+            flex: 0 0 240px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 145px;
+            object-fit: cover;
+            display: block;
+        }
+        .ss{
+            object-fit: cover;
+            overflow-x: auto;
+            display: block;
+            overflow: hidden;
+        }
+        .xx{
+            margin:25px;
+            display:none;
+            
+        }
+
+        /* Hover shadow only - text/image position won't move */
+
+        .movie-card:hover {
+            box-shadow: 0 0 15px #00a8e1;
+        }
+
+        .movie-card:hover .xx{
+            display: block;
+        }
+
+        @media (max-width: 1000px) {
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                height: 430px;
+            }
+
+            .hero-content h1 {
+                font-size: 30px;
+            }
+
+            .hero-content {
+                left: 6%;
+            }
+
+            .movie-section {
+                padding: 15px 4%;
+            }
+
+            .section-heading h3 {
+                font-size: 16px;
+            }
+
+            .movie-card {
+                flex-basis: 190px;
+            }
+
+            .movie-card img {
+                height: 115px;
+            }
+        }/*
+        /* mov */
+            .mi{
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            white-space: nowrap;
+            padding: 15px 5px 25px;
+        }
+
+        /* Scrollbar hide */
+        .mi::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mi {
+            scrollbar-width: none;
+        }
+
+
+        /* Each movie */
+        .mo {
+            flex: 0 0 280px;
+            width: 280px;
+            height: 390px;  
+
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mo img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Hover */
+        .mo:hover {
+            transform: scale(1.08);
+            z-index: 10;
+        }
+            /*mov end  */
+
+            /* slide top */
+        .top-row {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .top-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .top-card {
+            min-width: 280px;
+            height: 160px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .top-number {
+            position: absolute;
+            left: -5px;
+            bottom: -8px;
+            font-size: 90px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 10px black;
+            z-index: 2;
+        }
+
+        .top-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-left: 25px;
+        }
+        /* silde top end */
+
+         /* FOOTER */
+
+        footer {
+            background: #0b1117;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 40px;
+        }
+
+        .footer-logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            color: #00a8e1;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        footer p {
+            color: #aaa;
+            margin-top: 15px;
+        }
+        @media (max-width: 1000px) {
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .hero {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                height: 400px;
+            }
+
+            .hero-content {
+                left: 5%;
+                width: 80%;
+            }
+
+            .hero-content h1 {
+                font-size: 28px;
+            }
+
+            .movie-card {
+                flex: 0 0 190px;
+            }
+
+            .movie-card img {
+                height: 115px;
+            }
+
+            .mo {
+                flex: 0 0 200px;
+                width: 200px;
+                height: 280px;
+            }
+        }
+        
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="#" class="logo">prime video</a>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Free to me</a>
+            <a href="#">Movies</a>
+            <a href="#">TV shows</a>
+            <a href="#">Live TV</a>
+            <a href="#">▦ Subscriptions</a>
+        </div>
+
+        <div class="nav-right">
+
+            <i class="bi bi-search"></i>
+
+            <div class="language">
+                EN <i class="bi bi-chevron-down"></i>
+
+                <div class="language-menu">
+                    <a href="#">English</a>
+                    <a href="#">தமிழ்</a>
+                    <a href="#">Hindi</a>
+                    <a href="#">Telugu</a>
+                </div>
+            </div>
+
+            <i class="bi bi-grid-3x3-gap-fill"></i>
+
+            <div class="profile">
+                <i class="bi bi-person-fill"></i>
+            </div>
+
+            <button class="join-btn">Join Prime</button>
+
+        </div>
+    </nav>
+
+
+    <!-- 2. HOME PAGE SLIDER -->
+
+    <section class="hero">
+
+        <div id="primeSlider"
+             class="carousel slide"
+             data-bs-ride="carousel"
+             data-bs-interval="5000">
+
+            <!-- Indicators -->
+
+            <div class="carousel-indicators">
+
+                <button type="button"
+                        data-bs-target="#primeSlider"
+                        data-bs-slide-to="0"
+                        class="active"></button>
+
+                <button type="button"
+                        data-bs-target="#primeSlider"
+                        data-bs-slide-to="1"></button>
+
+                <button type="button"
+                        data-bs-target="#primeSlider"
+                        data-bs-slide-to="2"></button>
+
+                <button type="button"
+                        data-bs-target="#primeSlider"
+                        data-bs-slide-to="3"></button>
+
+            </div>
+
+            <div class="carousel-inner">
+
+                <!-- Slide 1 -->
+
+                <div class="carousel-item active">
+
+                    <img src="./image/prime.avif" alt="Featured movie">
+
+                    <div class="hero-content">
+
+                        <div class="mx-logo">MX</div>
+
+                        <p style="color:#f5d547;">★★★</p>
+
+                        <p><b>TIMES NOW NEWS</b></p>
+
+                        <h1>WAITING HAI!</h1>
+
+                        <p><b>NEW SERIES | WATCH NOW</b></p>
+
+                        <p style="color: yellow;">IMDb 7.2</p>
+
+                        <div class="movie-buttons">
+
+                            <button class="watch-btn">
+                                ▶ Episode 1<br> Watch now
+                            </button>
+
+                            <button class="round-btn">+</button>
+
+                            <button class="round-btn">
+                                <i class="bi bi-info-circle"></i>
+                            </button>
+
+                        </div>
+
+                        <p class="free-text">
+                            🔵 Watch for free
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+
+                <div class="carousel-item">
+
+                    <span class="ss">
+                    <img src="MADE INDIA.jpg" class="img-fluid" alt="Featured movie">
+                    </span>
+
+                    <div class="hero-content">
+
+                        <div class="mx-logo">MX</div>
+                        
+                        <p style="color:#f5d547;">★★★★</p>
+
+                        <h1>BEST SERIES</h1>
+
+                        <p>NEW SERIES | WATCH NOW</p>
+
+                        <p style="color: yellow;">IMDb 8.2</p>
+
+                        <div class="movie-buttons">
+                            <button class="watch-btn">
+                                ▶ Watch now
+                            </button>
+                            <button class="round-btn">+</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+
+                <div class="carousel-item">
+
+                    <img src="anime.avif" alt="Featured movie">
+
+                    <div class="hero-content">
+
+                        <div class="mx-logo">MX</div>
+                        
+                        <p style="color:#f5d547;">★★★★★</p>
+
+                        <h1>#1 ANIME</h1>
+
+                        <p>EXCLUSIVE SERIES | WATCH NOW</p>
+
+                        <p style="color: yellow;">IMDb 9.2</p>
+
+                        <div class="movie-buttons">
+                            <button class="watch-btn">
+                                ▶ Watch now
+                            </button>
+                            <button class="round-btn">+</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+
+                <div class="carousel-item">
+
+                    <span class="ss">
+                    <img src="romance 1.jpg" alt="Featured movie">
+                    </span>
+
+                    <div class="hero-content">
+
+                        <div class="mx-logo">MX</div>
+
+                        <p style="color:#f5d547;">★★</p>
+
+                        <h1>ROMANTIC SHOWS</h1>
+
+                        <p>WATCH YOUR FAVOURITE SHOWS</p>
+
+                        <p style="color: yellow;">IMDb 6.2</p>
+
+                        <div class="movie-buttons">
+                            <button class="watch-btn">
+                                ▶ Watch now
+                            </button>
+                            <button class="round-btn">+</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Previous -->
+
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#primeSlider"
+                    data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <!-- Next -->
+
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#primeSlider"
+                    data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+    </section>
+
+
+     <!--1.slide number -->
+<section class="movie-section">
+
+     <div class="section-heading">
+            <h3>#Top 10 Movies: Watch for Free</h3>
+             <a href="#">See more ›</a>
+        </div>
+
+    <div class="movie-container">
+
+        <div class="top-card">
+
+            <span class="top-number">1</span>
+
+            <img src="top.avif">
+
+        </div>
+
+
+        <div class="top-card">
+
+            <span class="top-number">2</span>
+
+            <img src="anime.avif">
+
+        </div>
+
+
+        <div class="top-card">
+
+            <span class="top-number">3</span>
+
+            <img src="top1.avif">
+
+        </div>
+
+
+        <div class="top-card">
+
+            <span class="top-number">4</span>
+
+            <img src="ROMACE.jpg">
+
+        </div>
+
+        <div class="top-card">
+
+            <span class="top-number">5</span>
+
+            <img src="hor3.jpg">
+
+        </div>
+
+        <div class="top-card">
+
+            <span class="top-number">6</span>
+
+            <img src="romance 1.jpg">
+
+        </div>
+        <div class="top-card">
+
+            <span class="top-number">7</span>
+
+            <img src="top5.jpg">
+
+        </div>
+
+    </div>
+
+</section>
+<!-- slide number end -->
+
+ <!-- 2. POPULAR ASIAN DRAMAS -->
+
+    <section class="movie-section">
+
+        <div class="section-heading">
+            <h3>Popular Movies: Watch for Free</h3>
+            <a href="#">See more ›</a>
+        </div>
+
+        <div class="movie-container">
+
+            <div class="movie-card">
+                <img src="top6.avif" alt="Asian drama 1">
+            </div>
+
+            <div class="movie-card" style="width: 18rem;">
+                <img src="top7.avif" class="card-img-top" alt="...">
+                <div class="xx">
+                    <h5 class="card-title"> THE BOYS </h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                    <a href="#" class="btn btn-primary">Watch Free</a>
+                </div>
+                </div>
+
+            <!-- <div class="movie-card">
+                <img src="top7.avif" alt="Asian drama 2">
+            </div> -->
+
+            <div class="movie-card">
+                <img src="top5.jpg" alt="Asian drama 3">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor2.jpg" alt="Asian drama 4">
+            </div>
+
+            <div class="movie-card">
+                <img src="po.jpg" alt="Asian drama 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="MADE INDIA.jpg" alt="Asian drama 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="po2.jpg" alt="Asian drama 5">
+            </div>
+
+        </div>
+    </section>
+
+     <!-- 3. Ainme -->
+
+    <section class="movie-section">
+
+        <div class="section-heading">
+            <h3>#Top10: Ainme: Watch for Free</h3>
+            <a href="#">See more ›</a>
+        </div>
+
+        <div class="movie-container">
+
+            <div class="movie-card">
+                <img src="ani3.jpg" alt="Ainme 1">
+                
+            </div>
+
+            <div class="movie-card">
+                <img src="ani1.jpg" alt="Ainme 2">
+            </div>
+
+            <div class="movie-card">
+                <img src="ani2.jpg" alt="Ainme 3">
+            </div>
+
+            <div class="movie-card">
+                <img src="ain4.jpg" alt="Ainme 4">
+            </div>
+
+            <div class="movie-card">
+                <img src="ain5.jpg" alt="Ainme 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="anime.avif" alt="Ainme 6">
+            </div>
+
+            <div class="movie-card">
+                <img src="ROMACE.jpg" alt="Ainme 7">
+            </div>
+
+        </div>
+    </section>
+
+   
+    <!--4. top slider Series -->
+     <section class="movie-section">
+
+            <div class="mi">
+
+                <div class="mo">
+                    <img src="sli.jpg" alt="top 1">
+                </div>
+
+                <div class="mo">
+                    <img src="sli1.jpg"alt="top 2">
+                </div>
+
+                <div class="mo">
+                    <img src="sli2.jpg"alt="top 3">
+                </div>
+
+                <div class="mo">
+                    <img src="sli3.jpg"alt="top 4">
+                </div>
+
+                <div class="mo">
+                    <img src="sil4.jpg"alt="top 5">
+                </div>
+                
+                <div class="mo">
+                    <img src="top.avif"alt="top 6">
+                </div>
+
+            </div>
+    </section>
+    <!-- 5. Horror SHOWS -->
+
+    <section class="movie-section">
+
+        <div class="section-heading">
+            <h3>Horror Shows: Watch for Free</h3>
+        </div>
+
+        <div class="movie-container">
+
+            <div class="movie-card">
+                <img src="hor.jpg" alt=" Horror show 1">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor1.jpg" alt=" Horror show 2">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor2.jpg" alt=" Horror show 3">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor3.jpg" alt=" Horror show 4">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor4.jpg" alt=" Horror show 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor5.jpg" alt=" Horror show 6">
+            </div>
+
+            <div class="movie-card">
+                <img src="hor6.jpg" alt=" Horror show 7">
+            </div>
+
+        </div>
+
+    </section>
+    
+     <!-- 6. HEARTFELT DRAMAS -->
+
+    <section class="movie-section">
+
+        <div class="section-heading">
+            <h3>Dive into heartfelt dramas: Watch for Free</h3>
+            <a href="#">See more ›</a>
+        </div>
+
+        <div class="movie-container">
+
+            <div class="movie-card">
+                <img src="top.avif" alt="Drama 1">
+            </div>
+
+            <div class="movie-card">
+                <img src="anime.avif" alt="Drama 2">
+            </div>
+
+            <div class="movie-card">
+                <img src="MADE INDIA.jpg" alt="Drama 3">
+            </div>
+
+            <div class="movie-card">
+                <img src="side1.jpg" alt="Drama 4">
+            </div>
+
+            <div class="movie-card">
+                <img src="side2.avif" alt="Drama 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="anime.avif" alt="Drama 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="side3.jpg" alt="Drama 5">
+            </div>
+
+        </div>
+    </section>
+    
+     <!-- 7. ROMANTIC SHOWS -->
+
+    <section class="movie-section">
+
+        <div class="section-heading">
+            <h3>Romantic Shows: Watch for Free</h3>
+        </div>
+
+        <div class="movie-container">
+
+            <div class="movie-card">
+                <img src="ro.jpg" alt="Romantic show 1">
+            </div>
+
+            <div class="movie-card">
+                <img src="ro1.jpg" alt="Romantic show 2">
+            </div>
+
+            <div class="movie-card">
+                <img src="ro2.jpg" alt="Romantic show 3">
+            </div>
+
+            <div class="movie-card">
+                <img src="ro3.jpg" alt="Romantic show 4">
+            </div>
+
+            <div class="movie-card">
+                <img src="ro4.jpg" alt="Romantic show 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="side2.avif" alt="Romantic show 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="side.png" alt="Romantic show 5">
+            </div>
+
+            <div class="movie-card">
+                <img src="sli2.jpg" alt="Romantic show 5">
+            </div>
+
+        </div>
+    </section>
+     
+
+    <!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-logo">
+        prime video
+    </div>
+
+    <div>
+        <a href="#">Terms</a>
+        <a href="#">Privacy Notice</a>
+        <a href="#">Help</a>
+        <a href="#">Feedback</a>
+    </div>
+
+    <p>
+        © 1996-2026, Amazon.com, Inc. or its affiliates
+    </p>
+
+</footer>
+
+
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+</html>
